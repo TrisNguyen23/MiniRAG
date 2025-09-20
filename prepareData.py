@@ -1,7 +1,7 @@
 from datasets import load_dataset
 
 def load_and_chunk():
-    dataset = load_dataset("wikipedia", "20220301.en", split="train[:0.05%]")
+    dataset = load_dataset("wikitext", "wikitext-2-raw-v1", split="train[:1%]")
     texts = []
     for article in dataset:
         content = article['text']
