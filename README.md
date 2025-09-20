@@ -8,6 +8,8 @@ A small Retrieval-Augmented Generation system using Hugging Face Transformers, F
 pip install -r requirements.txt
 ```
 
+## How to run this project
+
 ```bash
 streamlit run app.py
 ```
