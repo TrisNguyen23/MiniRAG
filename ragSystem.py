@@ -13,9 +13,9 @@ class MiniRAG:
         self.index = faiss.IndexFlatL2(dimension)
         self.index.add(self.embeddings)
         # Generator
-        self.generator = pipeline('text-generation', model='gpt2', max_length=300)
+        self.generator = pipeline('text-generation', model='EleutherAI/gpt-neo-125M', max_length=300)
 
-    def retrieve(self, query, top_k=5):
+    def retrieve(self, query, top_k=3):
         query_vec = self.embed_model.encode([query])
         distances, indices = self.index.search(query_vec, top_k)
         return [self.texts[i] for i in indices[0]]
@@ -24,7 +24,7 @@ class MiniRAG:
         context_docs = self.retrieve(query)
         context = "\n".join(context_docs)
         prompt = f"Answer the question based on the context below:\n{context}\nQuestion: {query}\nAnswer:"
-        output = self.generator(prompt, max_new_tokens=200, do_sample=True)[0]['generated_text']
+        output = self.generator(prompt, max_new_tokens=130, do_sample=True)[0]['generated_text']
         answer = output.split('Answer:')[-1].strip()
         return answer
 
